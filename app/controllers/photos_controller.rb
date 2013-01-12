@@ -12,12 +12,8 @@ class PhotosController < ApplicationController
 
   #get replies for a specific device user
   def get_replies
-    @photos= []
-    Photo.find_by_recipient_id(params[:user_id]).each do |p| 
-      @photos.add p.id 
-    end
     respond_to do |format|
-      format.json { render json: @photos}
+      format.json { render json: Photo.find_all_by_recipient_id(params[:user_id]).map {|p| {id: p.id, user_id: p.user_id,updated_at: p.updated_at} }}
     end
   end
 
