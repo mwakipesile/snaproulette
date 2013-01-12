@@ -1,4 +1,8 @@
 Snaproulette::Application.routes.draw do
+  resources :photos
+
+  match 'photos/:user_id/get_replies', to:'photos#get_replies'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
