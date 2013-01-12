@@ -1,7 +1,14 @@
 Snaproulette::Application.routes.draw do
-  resources :photos
+
+  match 'photos/:user_id/:their_id', to:'photos#index'
 
   match 'photos/:user_id/get_replies', to:'photos#get_replies'
+
+  match 'photos/:user_id', to:'photos#create', via: :put
+
+  match 'photos/:id', to:'photos#show'
+
+  match 'photos', to:'photos#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
