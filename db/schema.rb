@@ -11,13 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130112012753) do
+ActiveRecord::Schema.define(:version => 20130112041256) do
 
   create_table "photos", :force => true do |t|
     t.string   "user_id"
     t.text     "file"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "hits",         :default => 0
+    t.string   "recipient_id"
   end
+
+  add_index "photos", ["updated_at"], :name => "index_photos_on_updated_at"
 
 end
