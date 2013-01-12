@@ -7,5 +7,5 @@
 
 <p>
   <b>File:</b>
-  <img src='data:image/gif,base64,'<% puts @photo.file.to_s %>/>
-</p>
+  <img src='"data:image/gif,base64,'<%= puts @photo.file.to_s %>+"" />
+</p>''
