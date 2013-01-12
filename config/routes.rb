@@ -2,17 +2,18 @@ Snaproulette::Application.routes.draw do
 
   #photo routes, mapped to photo controller
 
+
   match 'photos', to:'photos#create', via: :post
 
-  match 'photos', to:'photos#index'
+  match 'photos', to:'photos#index', via: :get
 
-  match 'photos/:id', to:'photos#show'
+  match 'photos/:id', to:'photos#show', via: :get
 
   #reply routes, mapped to photo controller methods
 
   match 'reply/new', to:'photos#create_reply', via: :post
 
-  match 'reply/get', to:'photos#get_replies'
+  match 'reply/get', to:'photos#get_replies', via: :get
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
