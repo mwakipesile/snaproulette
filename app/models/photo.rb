@@ -3,7 +3,7 @@ class Photo < ActiveRecord::Base
   validates :file, presence:true
 
   def self.get_top
-  	order('updated_at DESC').where(:hits=>0...50).filter('recipient_id IS NULL').limit(50).sample
+  	order('updated_at DESC').where('hits < 51 AND recipient_id IS NULL').limit(50).sample
   end
 
 end
