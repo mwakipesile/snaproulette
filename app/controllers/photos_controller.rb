@@ -45,7 +45,7 @@ class PhotosController < ApplicationController
 
 
   def create_reply
-    @receiving_photo=Photo.find(:original_photo_id)
+    @receiving_photo=Photo.find(params[:original_photo_id].to_i)
     @receiving_photo.hits+=1
     @receiving_photo.save
 
