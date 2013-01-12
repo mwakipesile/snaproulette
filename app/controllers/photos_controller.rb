@@ -1,8 +1,9 @@
 class PhotosController < ApplicationController
   
-  #get a random valuable photo
+  # get a random valuable photo
+  # GET /photos.json
   def index
-    @photo = Photo.get_top
+    @photo = Photo.get(params[:user_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,10 +11,11 @@ class PhotosController < ApplicationController
     end
   end
 
-  #get replies for a specific device user
+  # get replies for a specific device user
+  # GET /reply/get
   def get_replies
     respond_to do |format|
-      format.json { render json: Photo.find_all_by_recipient_id(params[:user_id]).map {|p| {id: p.id, user_id: p.user_id,updated_at: p.updated_at} }}
+      format.json { render json: Photo.find_all_by_recipient_id(params[:user_id]).map{|p| {id: p.id, user_id: p.user_id, updated_at: p.updated_at} } }
     end
   end
 
@@ -27,7 +29,8 @@ class PhotosController < ApplicationController
     end
   end
 
-  #post new photo (not reply)
+  # post new photo (not reply)
+  # POST /photos.json
   def create
     @photo = Photo.new(params[:photo])
     @photo.file ||= params[:file]
@@ -43,7 +46,8 @@ class PhotosController < ApplicationController
     end
   end
 
-
+  # post a reply
+  # POST /reply/new
   def create_reply
     @receiving_photo=Photo.find(params[:original_photo_id].to_i)
     @receiving_photo.hits+=1
@@ -62,6 +66,7 @@ class PhotosController < ApplicationController
     end
 
   end
+
 
   def delete_all
     Photo.all.each do |ph|
