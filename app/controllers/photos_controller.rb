@@ -12,7 +12,10 @@ class PhotosController < ApplicationController
 
   #get replies for a specific device user
   def get_replies
-    @photos= Photo.find_by_recipient_id(params[:user_id])
+    @photos= []
+    Photo.find_by_recipient_id(params[:user_id]).each do |p| 
+      @photos.add p.id 
+    end
     respond_to do |format|
       format.json { render json: @photos}
     end
@@ -31,12 +34,14 @@ class PhotosController < ApplicationController
   #post new photo (not reply)
   def create
     @photo = Photo.new(params[:photo])
+    @photo.file ||= params[:file]
+    @photo.user_id ||= params[:user_id]
     respond_to do |format|
       if @photo.save
         format.html {render text: "OK"}
-        format.json { render json: @photo, status: :created, location: @photo }
+        format.json { render json: {status: "OK"}}
       else
-        format.html {render text: "FAIL"}
+        format.html {render text: @photo.errors.inspect}
         format.json { render json: @photo.errors, status: :unprocessable_entity }
       end
     end
@@ -49,14 +54,23 @@ class PhotosController < ApplicationController
     @receiving_photo.save
 
     @reply=Photo.new(params[:photo])
+    @reply.file ||= params[:file]
+    @reply.user_id ||= params[:user_id]
+
     if @reply.save
       format.html {render text: "OK"}
-      format.json { render json: @reply, status: :created, location: @reply }
+      format.json { render json: {status: "OK"}}
     else
       format.html {render text: "FAIL"}
       format.json { render json: @reply.errors, status: :unprocessable_entity }
     end
 
+  end
+
+  def delete_all
+    Photo.all.each do |ph|
+      ph.delete
+    end
   end
 
 

@@ -15,6 +15,9 @@ Snaproulette::Application.routes.draw do
 
   match 'reply/get', to:'photos#get_replies', via: :get
 
+  #this should be deleted immediately!!!
+  match 'armageddon', to:'photos#delete_all', via: :get
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
