@@ -59,13 +59,16 @@ class PhotosController < ApplicationController
     @reply.file ||=    params[:file]
     @reply.user_id ||= params[:user_id]
 
-    if @reply.save
-      format.html { render text: "OK"}
-      format.json { render json: {status: "OK"}}
-    else
-      format.html { render text: "FAIL"}
-      format.json { render json: @reply.errors, status: :unprocessable_entity }
+    respond_to do |format|
+      if @reply.save
+        format.html { render text: "OK"}
+        format.json { render json: {status: "OK"}}
+      else
+        format.html { render text: "FAIL"}
+        format.json { render json: @reply.errors, status: :unprocessable_entity }
+      end
     end
+    
   end
 
   def delete_all
