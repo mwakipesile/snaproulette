@@ -58,6 +58,7 @@ class PhotosController < ApplicationController
     @reply =           Photo.new(params[:photo])
     @reply.file ||=    params[:file]
     @reply.user_id ||= params[:user_id]
+    @reply.recipient_id ||= @receiving_photo.user_id
 
     respond_to do |format|
       if @reply.save
@@ -68,7 +69,7 @@ class PhotosController < ApplicationController
         format.json { render json: @reply.errors, status: :unprocessable_entity }
       end
     end
-    
+
   end
 
   def delete_all
