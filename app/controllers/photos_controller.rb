@@ -59,7 +59,7 @@ class PhotosController < ApplicationController
     @reply.file ||=    params[:file]
     @reply.user_id ||= params[:user_id]
     @reply.recipient_id ||= @receiving_photo.user_id
-
+    @reply.original_photo_id ||= @receiving_photo.id
     respond_to do |format|
       if @reply.save
         format.html { render text: "OK"}
