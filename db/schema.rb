@@ -11,17 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130112041256) do
+ActiveRecord::Schema.define(:version => 20130112075844) do
 
   create_table "photos", :force => true do |t|
     t.string   "user_id"
     t.text     "file"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.integer  "hits",         :default => 0
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.integer  "hits",              :default => 0
     t.string   "recipient_id"
+    t.integer  "original_photo_id"
   end
 
+  add_index "photos", ["original_photo_id"], :name => "index_photos_on_original_photo_id"
   add_index "photos", ["updated_at"], :name => "index_photos_on_updated_at"
 
 end
