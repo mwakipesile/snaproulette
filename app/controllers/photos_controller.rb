@@ -74,9 +74,4 @@ class PhotosController < ApplicationController
     end
 
   end
-
-  def delete_all
-    Photo.delete_all
-    render :text => 'KABOOM!'
-  end
 end
