@@ -27,6 +27,8 @@ class PhotosController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @photo }
     end
+
+    @photo.destroy
   end
 
   # post new photo (not reply)
