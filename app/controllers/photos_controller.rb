@@ -28,7 +28,6 @@ class PhotosController < ApplicationController
       format.json { render json: @photo }
     end
 
-    @photo.destroy
   end
 
   # post new photo (not reply)
