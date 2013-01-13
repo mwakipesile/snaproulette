@@ -15,8 +15,7 @@ class PhotosController < ApplicationController
   # GET /reply/get
   def get_replies
     respond_to do |format|
-      format.json { render json: Photo.find_all_by_recipient_id(params[:user_id]).map 
-                    {|p| {id: p.id, user_id: p.user_id, updated_at: p.updated_at} } }
+      format.json { render json: Photo.find_all_by_recipient_id(params[:user_id]).map{|p| {id: p.id, user_id: p.user_id, updated_at: p.updated_at} } }
     end
   end
 
@@ -47,6 +46,7 @@ class PhotosController < ApplicationController
     end
   end
 
+  # post a reply
   # POST /reply/new
   def create_reply
     @receiving_photo=Photo.find(:original_photo_id)
@@ -66,6 +66,7 @@ class PhotosController < ApplicationController
     end
 
   end
+
 
   def delete_all
     Photo.all.each do |ph|
