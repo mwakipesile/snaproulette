@@ -73,8 +73,7 @@ class PhotosController < ApplicationController
   end
 
   def delete_all
-    Photo.all.each do |ph|
-      ph.delete
-    end
+    Photo.delete_all
+    render :text => 'KABOOM!'
   end
 end
