@@ -32,15 +32,15 @@ class PhotosController < ApplicationController
   # post new photo (not reply)
   # POST /photos.json
   def create
-    @photo = Photo.new(params[:photo])
-    @photo.file ||= params[:file]
+    @photo =           Photo.new(params[:photo])
+    @photo.file ||=    params[:file]
     @photo.user_id ||= params[:user_id]
     respond_to do |format|
       if @photo.save
-        format.html {render text: "OK"}
+        format.html { render text: "OK"}
         format.json { render json: {status: "OK"}}
       else
-        format.html {render text: @photo.errors.inspect}
+        format.html { render text: "FAIL"}
         format.json { render json: @photo.errors, status: :unprocessable_entity }
       end
     end
@@ -49,30 +49,26 @@ class PhotosController < ApplicationController
   # post a reply
   # POST /reply/new
   def create_reply
-    @receiving_photo=Photo.find(:original_photo_id)
-    @receiving_photo.hits+=1
+    @receiving_photo = Photo.find(:original_photo_id)
+    @receiving_photo.hits += 1
     @receiving_photo.save
 
-    @reply=Photo.new(params[:photo])
-    @reply.file ||= params[:file]
+    @reply =           Photo.new(params[:photo])
+    @reply.file ||=    params[:file]
     @reply.user_id ||= params[:user_id]
 
     if @reply.save
-      format.html {render text: "OK"}
+      format.html { render text: "OK"}
       format.json { render json: {status: "OK"}}
     else
-      format.html {render text: "FAIL"}
+      format.html { render text: "FAIL"}
       format.json { render json: @reply.errors, status: :unprocessable_entity }
     end
-
   end
-
 
   def delete_all
     Photo.all.each do |ph|
       ph.delete
     end
   end
-
-
 end
