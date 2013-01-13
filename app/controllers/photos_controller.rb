@@ -27,7 +27,7 @@ class PhotosController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @photo }
     end
-
+    @photo.destroy
   end
 
   # post new photo (not reply)
@@ -50,15 +50,19 @@ class PhotosController < ApplicationController
   # post a reply
   # POST /reply/new
   def create_reply
-    @receiving_photo=Photo.find(params[:original_photo_id].to_i)
-    @receiving_photo.hits+=1
-    @receiving_photo.save
 
     @reply =           Photo.new(params[:photo])
     @reply.file ||=    params[:file]
     @reply.user_id ||= params[:user_id]
-    @reply.recipient_id ||= @receiving_photo.user_id
-    @reply.original_photo_id ||= @receiving_photo.id
+    @reply.recipient_id ||= params[:recipient_id]
+
+    if params[:original_photo_id]
+      @receiving_photo=Photo.find(params[:original_photo_id].to_i)
+      @receiving_photo.hits+=1
+      @receiving_photo.save
+      @reply.original_photo_id ||= @receiving_photo.id
+    end
+
     respond_to do |format|
       if @reply.save
         format.html { render text: "OK"}
